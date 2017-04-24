@@ -31,3 +31,5 @@ This also needs a test suite.
 ### References
 
 About Fandom Trumps Hate: <a href="https://fandomtrumpshate.tumblr.com/FAQ" target="_blank">FAQ page</a><br/>
+
+Find a walkthrough of a snippet of generate.cpp <a href="https://gist.github.com/Cathfish/aa4ca7fb7fa4e112e07ae25ca15183a7" target="_blank">here</a>.
