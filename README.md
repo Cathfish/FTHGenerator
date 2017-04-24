@@ -5,7 +5,7 @@ This program was used during the first round of the Fandom Trumps Hate auction (
 ## Installation
 
 The source code for this project is here:
-<br/>https://github.com/Cathfish/doll-smuggler<br/>
+<br/>https://github.com/Cathfish/FTHGenerator<br/>
 Clone the whole repository and navigate to the repository directory. Make sure your intended input file finds its way into this directoyry.<br/>
 
 ## Usage
