@@ -44,13 +44,13 @@ void printPretty(vector<map<string, string> > &user) {
 	} 
 	cout << "!</a></p>\n";
 	
-	cout << "<p>\nTo contact the seller before bidding, please email" + user[0]["email"] + "</p>\n";
+	cout << "<p>\nTo contact the seller before bidding, please email " + user[0]["email"] + "</p>\n";
 	cout << "<p>\nIf you have a very specific prompt and are not flexible, it’s best to contact ";
 	cout << "the seller before bidding, even if it fits within their listed parameters. If you ";
 	cout << "are asking for a specific kink, <b>always ask first.</b></p>\n";
 
 	cout << "<p>\nCharities these auctions benefit: " + user[0]["orgs"] + "</p>\n";
-	cout << "<p>(<a href=\"http://fandomtrumpshate.tumblr.com/nonprofits\" target=\"_blank\">See full list</a>)</p>\n";
+	cout << "<p>(<a href=\"https://fandomtrumpshate.tumblr.com/nonprofits\" target=\"_blank\">See full list</a>)</p>\n";
 
 	cout << "<p><b>" + NAME + "’s offerings:</b></p><hr>\n";
 
@@ -70,6 +70,11 @@ void printPretty(vector<map<string, string> > &user) {
 		cout << "<b>Fandom(s): </b>" + FANDOMS + "<br>\n<b>Highest rating creator will work with: </b>" + RATING + "<br>\n";
 		cout << "<b>Length: </b>" + LENGTH + "<br>\n<b>Especially interested in: </b>" + user[i]["creatorLikes"] + "<br>\n";
 		cout << "<b>Unwilling to address: </b>" + user[i]["creatorDislikes"] + "<br>\n<b>Notes: </b>" + user[i]["creatorNotes"] + "<br></p>\n";
+		cout << "<b>Minimum Bid: </b>$";
+		if (user[i].count("altMinBid")) {
+			cout << user[i]["altMinBid"];
+		} else { cout << "5"; }
+		cout << "<br></p>\n";
 
 		cout << "<p>Auctions run from 8 January 2018 (Midnight, EST) to 14 January 2018 (Midnight, EST).";
 		cout << "<b> Bids before or after this period are invalid and will not be counted.</b>";
@@ -97,10 +102,6 @@ void feed(vector<map<string, string> > &forms) {
 	string line = "";
 	int position = 0;
 
-	// Throw out form submission timestamp
-	getline(cin, line, '\t');
-	position++;
-
 	while (getline(cin, line, '\t')) {
 		switch (position) {
 			case 7:
@@ -108,16 +109,21 @@ void feed(vector<map<string, string> > &forms) {
 				break;
 			case 18:
 			case 19:
+			case 25:
+			case 26:
+			case 0:
+				break;
+			case 27:
+				position = 0;
+				forms.push_back(parsed);
+				parsed.clear();
 				break;
 			default:
-				if (position < 25) {
-					fillMap(position, parsed, line);
-				}
+				fillMap(position, parsed, line);
 				break;
 		}
 		position++;
 	}
-	forms.push_back(parsed);
 }
 
 int main(int argc, char* argv[]) {
@@ -125,8 +131,9 @@ int main(int argc, char* argv[]) {
 	vector<map<string, string> > forms;
 	vector<map<string, string> > singleUser;
 	
-	getline(cin, garbage);
+	//getline(cin, garbage);
 	feed(forms);
+	cout << forms.size() << endl;
 
 	singleUser.push_back(forms[0]);
 	for (int i = 1; i < forms.size(); i++) {
