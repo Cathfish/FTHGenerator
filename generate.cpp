@@ -56,7 +56,10 @@ void printPretty(vector<map<string, string> > &user) {
 
 	for (int i = 0; i < user.size(); i++) {
 		string RATING = user[i]["rating"];
-		string LENGTH = user[i].count("ficLength") ? user[i]["ficLength"] : "N/A";
+		string LENGTH = "N/A";
+		if (user[i].count("ficLength")) { LENGTH = user[i]["ficLength"]; }
+		if (user[i].count("limitations")) { LENGTH = user[i]["limitations"]; }
+
 		string FANDOMS = user[i]["fandomFirst"];
 		if (user[i].count("fandomSecond")) { FANDOMS += ", " + user[i]["fandomSecond"]; }
 		if (user[i].count("fandomThird")) { FANDOMS += ", " + user[i]["fandomThird"]; }
@@ -105,7 +108,7 @@ void feed(vector<map<string, string> > &forms) {
 	while (getline(cin, line, '\t')) {
 		switch (position) {
 			case 7:
-				if (line.find("Yes,") > -1) { fillMap(8, parsed, "Any"); }
+				if (!line.find("Yes,")) { fillMap(8, parsed, "Any"); }
 				break;
 			case 18:
 			case 19:
@@ -131,9 +134,7 @@ int main(int argc, char* argv[]) {
 	vector<map<string, string> > forms;
 	vector<map<string, string> > singleUser;
 	
-	//getline(cin, garbage);
 	feed(forms);
-	cout << forms.size() << endl;
 
 	singleUser.push_back(forms[0]);
 	for (int i = 1; i < forms.size(); i++) {
